@@ -1,0 +1,43 @@
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
+LiquidCrystal_I2C lcd(0x27, 16, 4);  
+
+String s1 = "Hello world i am using this as a demonstration to you all";
+int sl = 0, fl = 15;
+int leng;
+
+void setup() {
+  lcd.begin(16,4);
+  lcd.backlight();
+  lcd.clear();
+  Serial.begin(9600);
+
+  leng = s1.length();
+}
+
+void loop() {
+ 
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print(s1.substring(sl, fl));
+
+
+  Serial.print("sl: ");
+  Serial.print(sl);
+  Serial.print("  fl: ");
+  Serial.print(fl);
+  Serial.print("  Substring: ");
+  Serial.println(s1.substring(sl, fl));
+
+
+  sl++;
+  fl++;
+
+  if (fl > leng) {  
+    sl = 0;
+    fl = 15;
+  }
+
+  delay(500);
+}
